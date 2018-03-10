@@ -1,0 +1,144 @@
+<!-- Components info: https://webdev.dartlang.org/components -->
+<div *ngIf="participants.isNotEmpty">
+    <ul>
+        <li *ngFor="let participant of participants; let i=index">
+            <div *ngIf="selectedParticipant != participant">
+                <span >{{participant.name}}</span>
+                <material-fab mini (trigger)="remove(i)" materialTooltip="Delete this participant">
+                    <material-icon icon="delete" ></material-icon>
+                </material-fab>
+                <material-fab mini (trigger)="selectedParticipant = participant" materialTooltip="Edit this participant">
+                    <glyph icon="edit"></glyph>
+                </material-fab>
+            </div>
+            <div *ngIf="selectedParticipant == participant">
+                <material-input label="Participant name"
+                                autoFocus floatingLabel style="width:80%"
+                                [(ngModel)]="selectedParticipant.name">
+                </material-input>
+
+                <div>
+                    <label>Birthday</label>
+                    <pikaday [(day)]="selectedParticipant.birthdayDate" format="DD-MM-YYYY"
+                             placeholder="Birthday">
+                    </pikaday>
+                </div>
+
+                <material-checkbox label="Vegan diet"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedParticipant.vegan">
+                </material-checkbox>
+
+                <material-checkbox label="Vegetarian diet"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedParticipant.vegetarian">
+                </material-checkbox>
+
+                <material-checkbox label="Muslim diet"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedParticipant.muslim">
+                </material-checkbox>
+
+                <material-checkbox label="Kosher diet"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedParticipant.kosher">
+                </material-checkbox>
+
+                <material-checkbox label="Gluten allergy"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedParticipant.glutenAllergies">
+                </material-checkbox>
+
+                <material-input label="Other allergies"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedParticipant.extraAllergies">
+                </material-input>
+
+
+                <material-checkbox label="Special needs for electricity"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedParticipant.needsElectricity">
+                </material-checkbox>
+                <li *ngFor="let participation of participant.participations; let p=index">
+                    <div *ngIf="selectedParticipation != participation">
+                        <span >{{participation.type}} {{participation.date}} </span>
+                        <material-fab mini (trigger)="removeParticipation(p)" materialTooltip="Delete this participation">
+                            <material-icon icon="delete" ></material-icon>
+                        </material-fab>
+                        <material-fab mini (trigger)="selectedParticipation = participation" materialTooltip="Edit this participation">
+                            <glyph icon="edit"></glyph>
+                        </material-fab>
+                    </div>
+
+                    <div *ngIf="selectedParticipation == participation">
+                        <div>
+                            <label>Participation type </label>
+                            <material-dropdown-select
+                                    [buttonText]="selectedParticipation.type"
+                                    [options]="typeSelectionOptions"
+                                    [selection]="typeSelectionModel()">
+                                <!--<material-select-item *ngFor="let t of ['Group', 'Helper']"-->
+                                                      <!--(trigger)="selectedParticipation.type = t"-->
+                                                      <!--[selected]="selectedParticipation.type == t">-->
+                                    <!--{{ t }}-->
+                                <!--</material-select-item>-->
+                            </material-dropdown-select>
+                        </div>
+                        <div>
+                            <label>Date</label>
+                            <pikaday [(day)]="selectedParticipation.dateDate" format="DD-MM-YYYY"
+                                     placeholder="Date">
+                            </pikaday>
+                        </div>
+                        <material-checkbox label="Morning"
+                                           floatingLabel style="width:80%"
+                                           [(ngModel)]="selectedParticipation.morning">
+                        </material-checkbox>
+
+                        <material-checkbox label="Midday"
+                                           floatingLabel style="width:80%"
+                                           [(ngModel)]="selectedParticipation.midday">
+                        </material-checkbox>
+
+                        <material-checkbox label="Evening"
+                                           floatingLabel style="width:80%"
+                                           [(ngModel)]="selectedParticipation.evening">
+                        </material-checkbox>
+
+                        <div>
+                            <material-button (trigger)="selectedParticipation=null" >
+                                Close
+                            </material-button>
+                        </div>
+                    </div>
+                </li>
+                <div>
+                    <material-button (trigger)="addParticipation()" >
+                        Register new participation
+                    </material-button>
+                </div>
+                <div>
+                    <material-button (trigger)="save()" >
+                        Save
+                    </material-button>
+                    <material-button (trigger)="saveAddSimilar()" >
+                        Save and Add Similar
+                    </material-button>
+                    <material-button (trigger)="cancel()" >
+                        Cancel
+                    </material-button>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<p *ngIf="participants.isEmpty">
+    No participants! Register one or more participants
+</p>
+
+<div>
+    <material-button (trigger)="add()" >
+       Register new participant
+    </material-button>
+</div>

@@ -1,0 +1,46 @@
+<!--
+  Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
+  for details. All rights reserved. Use of this source code is governed by a
+  BSD-style license that can be found in the LICENSE file.
+-->
+<material-drawer persistent #drawer="drawer" [attr.end]="end ? '' : null">
+    <material-list *deferredContent>
+        <div group class="mat-drawer-spacer"></div>
+        <div group>
+            <material-list-item (click)="menuItem='users'">
+                <material-icon icon="face"></material-icon>Users
+            </material-list-item>
+            <material-list-item (click)="menuItem='groups'">
+                <material-icon icon="group"></material-icon>Groups
+            </material-list-item>
+            <material-list-item (click)="menuItem='activities'">
+                <material-icon icon="directions_walk"></material-icon>Activities
+            </material-list-item>
+            <material-list-item (click)="menuItem='participants'">
+                <material-icon icon="person"></material-icon>Participants
+            </material-list-item>
+        </div>
+        <!--<div group>-->
+            <!--<div label>Tags</div>-->
+            <!--<material-list-item (click)="menuItem='favorites'">-->
+                <!--<material-icon icon="star"></material-icon>Favorites-->
+            <!--</material-list-item>-->
+        <!--</div>-->
+    </material-list>
+</material-drawer>
+<material-content>
+    <header class="material-header shadow">
+        <div class="material-header-row">
+            <material-button icon
+                             class="material-drawer-button" (trigger)="drawer.toggle()">
+                <material-icon icon="menu"></material-icon>
+            </material-button>
+            <span class="material-header-title">SSC 2019</span>
+        </div>
+    </header>
+    <div class="inner" [ngSwitch]="menuItem">
+        <groups *ngSwitchCase="'groups'"></groups>
+        <participants *ngSwitchCase="'participants'"></participants>
+        <div       *ngSwitchDefault>No choice</div>
+    </div>
+</material-content>

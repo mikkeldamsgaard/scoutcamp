@@ -1,0 +1,93 @@
+<!-- Components info: https://webdev.dartlang.org/components -->
+<div *ngIf="groups.isNotEmpty">
+    <ul>
+        <li *ngFor="let group of groups; let i=index">
+            <div *ngIf="selectedGroup != group">
+                <span >{{group.name}}</span>
+                <material-fab mini (trigger)="remove(i)" materialTooltip="Delete this group">
+                    <material-icon icon="delete" ></material-icon>
+                </material-fab>
+                <material-fab mini (trigger)="selectedGroup = group" materialTooltip="Edit this group">
+                    <glyph icon="edit"></glyph>
+                </material-fab>
+            </div>
+            <div *ngIf="selectedGroup == group">
+                <material-input label="Group name"
+                                autoFocus floatingLabel style="width:80%"
+                                [(ngModel)]="selectedGroup.name">
+                </material-input>
+
+                <material-input label="Contact Name"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedGroup.contactName">
+                </material-input>
+
+                <material-input label="Contact email"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedGroup.contactEmail">
+                </material-input>
+
+                <material-input label="Contact address"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedGroup.contactAddress">
+                </material-input>
+
+                <material-input label="Contact zip"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedGroup.contactZip">
+                </material-input>
+
+                <material-input label="Contact city"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedGroup.contactCity">
+                </material-input>
+
+                <material-input label="Contact country"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedGroup.contactCountry">
+                </material-input>
+
+                <material-input label="Accounting contact name"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedGroup.accountingName">
+                </material-input>
+
+
+                <material-input label="Account number"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedGroup.accountingAccountNo">
+                </material-input>
+
+                <material-input label="Accounting contact phone number"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedGroup.accountingPhone">
+                </material-input>
+
+                <material-input label="Accounting contact phone number"
+                                floatingLabel style="width:80%"
+                                [(ngModel)]="selectedGroup.accountingEmail">
+                </material-input>
+
+
+                <div>
+                    <material-button (trigger)="save()" >
+                        Save
+                    </material-button>
+                    <material-button (trigger)="cancel()" >
+                        Cancel
+                    </material-button>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<p *ngIf="groups.isEmpty">
+    No groups! Register one or more groups
+</p>
+
+<div>
+    <material-button (trigger)="add()" >
+       Register new group
+    </material-button>
+</div>
