@@ -5,6 +5,7 @@ plugins {
     kotlin("jvm") version "1.2.21"
     java
     id("org.jetbrains.kotlin.kapt") version "1.2.21"
+    application
 }
 
 repositories {
@@ -28,4 +29,8 @@ dependencies {
     compile("com.fasterxml.jackson.module","jackson-module-kotlin","2.9.4")
     compile("org.slf4j", "slf4j-simple","1.6.1")
 
+}
+
+application {
+    mainClassName = "com.cloudpartners.ServerKt"
 }

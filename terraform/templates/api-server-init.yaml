@@ -1,0 +1,29 @@
+#cloud-config
+write_files:
+  - path: /usr/bin/server_boot
+    owner: root:root
+    permissions: '0755'
+    content: |
+      #!/usr/bin/env bash
+
+      apt-get update
+
+      # install sdkman
+      curl -s "https://get.sdkman.io" | bash
+      source ~/.sdkman/bin/sdkman-init.sh
+
+      sdk install java
+      sdk install gradle
+      skd install kotlin
+      # install git
+      apt-get install git
+
+      cd /opt
+      git co https://github.com/mikkeldamsgaard/scoutcamp.git
+
+      cd scoutcamp
+      gradle build
+      nohup gradle run &
+
+runcmd:
+  - /usr/bin/server_boot
