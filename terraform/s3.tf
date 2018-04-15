@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "frontend" {
-  bucket_domain_name = "scoutcamp-${terraform.workspace}-frontend"
+  bucket = "scoutcamp-${terraform.workspace}-frontend"
   policy =<<EOF
 {
   "Version":"2012-10-17",

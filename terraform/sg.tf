@@ -22,9 +22,9 @@ resource "aws_security_group" "api-server" {
   tags { Name = "appserver" }
   vpc_id = "${aws_vpc.vpc.id}"
   ingress {
-    from_port = 8000
+    from_port = 4567
     protocol = "TCP"
-    to_port = 8000
+    to_port = 4567
     security_groups = ["${aws_security_group.api-alb.id}"]
     description = "alb"
   }

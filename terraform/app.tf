@@ -1,5 +1,5 @@
 resource "aws_alb" "api" {
-  subnets = ["${aws_subnet.a_public}", "${aws_subnet.b_public}"]
+  subnets = ["${aws_subnet.a_public.id}", "${aws_subnet.b_public.id}"]
   security_groups = ["${aws_security_group.api-alb.id}"]
 }
 
