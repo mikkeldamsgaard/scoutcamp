@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - bash terraform/cicd/build/install.sh
+  build:
+    commands:
+      - bash terraform/cicd/build/build.sh
+  post_build:
+    commands:
+      - cp -r terraform/cicd/deploy/* backend/build/distributions
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'build/distributions'
