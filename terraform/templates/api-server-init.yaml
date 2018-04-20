@@ -11,7 +11,8 @@ write_files:
       apt-get install unzip zip -y
 
       # install sdkman
-      export SDKMAN_DIR="/opt/sdkman" && curl -s "https://get.sdkman.io" | bash
+      export SDKMAN_DIR="/opt/sdkman"
+      curl -s "https://get.sdkman.io" | bash
       source /opt/sdkman/bin/sdkman-init.sh
 
       sdk install java
