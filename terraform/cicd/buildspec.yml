@@ -7,7 +7,7 @@ phases:
       - apt-get install unzip zip -y
       - export SDKMAN_DIR="/opt/sdkman"
       - curl -s "https://get.sdkman.io" | bash
-      - source /opt/sdkman/bin/sdkman-init.sh
+      - . /opt/sdkman/bin/sdkman-init.sh
       - sdk install java
       - sdk install kotlin
       - sdk install gradle

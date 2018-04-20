@@ -75,7 +75,7 @@ resource "aws_codebuild_project" "build" {
   }
   environment {
     compute_type = "BUILD_GENERAL1_SMALL"
-    image = "aws/codebuild/eb-java-8-amazonlinux-64:2.4.3"
+    image = "aws/codebuild/ubuntu-base:14.04"
     type = "LINUX_CONTAINER"
   }
   name = "${terraform.workspace}-build"
