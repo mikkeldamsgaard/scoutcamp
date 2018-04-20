@@ -29,7 +29,7 @@ resource "aws_codepipeline" "cp" {
         Repo = "scoutcamp"
         PollForSourceChanges = "true"
         Branch = "${local.git_branch}"
-        OAuthToken = "3b41974613bf08b4c3a1772f2f9ea88d5ed5734a"
+        OAuthToken = "${local.oauth}"
       }
       run_order = 1
     }
