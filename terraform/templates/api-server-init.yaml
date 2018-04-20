@@ -11,21 +11,10 @@ write_files:
       apt-get install unzip zip -y
 
       # install sdkman
-      curl -s "https://get.sdkman.io" | bash
-      source ~/.sdkman/bin/sdkman-init.sh
+      export SDKMAN_DIR="/opt/sdkman" && curl -s "https://get.sdkman.io" | bash
+      source /opt/sdkman/bin/sdkman-init.sh
 
       sdk install java
-      sdk install gradle
-      sdk install kotlin
-      # install git
-      apt-get install git
-
-      cd /opt
-      git clone https://github.com/mikkeldamsgaard/scoutcamp.git
-
-      cd scoutcamp/backend
-      gradle build
-      nohup gradle run > /var/log/scoutcamp.log &
 
 runcmd:
   - /usr/bin/server_boot

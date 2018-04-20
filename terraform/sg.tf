@@ -9,6 +9,13 @@ resource "aws_security_group" "api-alb" {
     cidr_blocks = ["0.0.0.0/0"]
     description = "http"
   }
+  ingress {
+    from_port = 443
+    protocol = "TCP"
+    to_port = 443
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "http"
+  }
   egress {
     from_port = 0
     protocol = "-1"

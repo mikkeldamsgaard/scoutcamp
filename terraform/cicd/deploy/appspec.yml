@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /tmp/
+hooks:
+  ApplicationStop:
+    - location: application_stop.sh
+      timeout: 10
+  AfterInstall:
+    - location: after_install.sh
+      tomeout: 30
+  ApplicationStart:
+    - location: application_start.sh
+      timeout: 45

@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - cd backend
+      - gradle distTar
+      - cd ..
+  post_build:
+    commands:
+      - cp -r terraform/cicd/deploy/* backend/build/distributions
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'build/distributions'

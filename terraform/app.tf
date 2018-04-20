@@ -24,16 +24,16 @@ resource "aws_alb_target_group" "api-https" {
   vpc_id = "${aws_vpc.vpc.id}"
 }
 
-//resource "aws_alb_listener" "api-https" {
-//  "default_action" {
-//    target_group_arn = "${aws_alb_target_group.api-https.arn}"
-//    type = "forward"
-//  }
-//  load_balancer_arn = "${aws_alb.api.arn}"
-//  protocol = "HTTP"
-//  port = 443
-//  certificate_arn = "${data.aws_acm_certificate.star.arn}"
-//}
+resource "aws_alb_listener" "api-https" {
+  "default_action" {
+    target_group_arn = "${aws_alb_target_group.api-https.arn}"
+    type = "forward"
+  }
+  load_balancer_arn = "${aws_alb.api.arn}"
+  protocol = "HTTPS"
+  port = 443
+  certificate_arn = "${local.cert}"
+}
 
 resource "aws_autoscaling_group" "api" {
   name_prefix = "${terraform.env}-api-${aws_launch_configuration.api.name}"
