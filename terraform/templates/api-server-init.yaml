@@ -10,11 +10,18 @@ write_files:
 
       apt-get install unzip zip -y
 
+      # install codedeploy agent
+      REGION=`curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r .region`
+      wget https://aws-codedeploy-$REGION.s3.amazonaws.com/latest/install
+      chmod +x install
+      ./install auto
+
       # install sdkman
       export SDKMAN_DIR="/opt/sdkman"
       curl -s "https://get.sdkman.io" | bash
       source /opt/sdkman/bin/sdkman-init.sh
 
+      # install java
       sdk install java
 
 runcmd:
