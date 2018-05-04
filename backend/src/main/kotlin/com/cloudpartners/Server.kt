@@ -14,6 +14,8 @@ import spark.Service
 import java.io.File
 import java.util.*
 import spark.Spark.*
+import java.net.URI
+
 class Server {
 
 }
@@ -71,7 +73,7 @@ fun main(args: Array<String>) {
     val jacksonObjectMapper = ObjectMapper().registerModule(KotlinModule())
     after(Filter({ req, res ->
         res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")
-        res.header("Access-Control-Allow-Origin", "*")
+        res.header("Access-Control-Allow-Origin", req.headers("Origin"))
         res.header("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin,")
         res.header("Access-Control-Allow-Credentials", "true")
     }))
@@ -116,6 +118,24 @@ fun main(args: Array<String>) {
             val participant = mapper.load(Participant::class.java, id)
             mapper.delete(participant)
             "ok"
+        }
+    }
+    path("/isLoggedIn") {
+        get("") { req, res ->
+            val a = req.cookie("auth")
+            if (a!=null) "YES" else "NO"
+        }
+    }
+    path("/authenticate") {
+        get("") {req,res ->
+            val token = req.queryParams("token")
+            res.cookie("auth", token)
+            res.redirect("http://localhost:64896/")
+        }
+    }
+    path("/simulateCognito") {
+        get("") { req,res ->
+            res.redirect("authenticate?token=1234")
         }
     }
 
