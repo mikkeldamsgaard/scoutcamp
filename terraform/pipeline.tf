@@ -117,7 +117,7 @@ resource "aws_codebuild_project" "build_frontend" {
     type = "CODEPIPELINE"
   }
   environment {
-    compute_type = "BUILD_GENERAL1_SMALL"
+    compute_type = "BUILD_GENERAL1_LARGE"
     image = "aws/codebuild/ubuntu-base:14.04"
     type = "LINUX_CONTAINER"
   }
