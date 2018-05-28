@@ -1,7 +1,7 @@
 resource "aws_cognito_user_pool" "pool" {
   lifecycle {
-    # These two attributes in ignore changes are just terraform quirks.
-    ignore_changes = ["schema"]
+    # These two attributes in ignore changes are just terraform quirks. If you change values in schema, remember to comment out the next line
+    #ignore_changes = ["schema"]
   }
   name = "${terraform.workspace}"
 
@@ -23,6 +23,7 @@ resource "aws_cognito_user_pool" "pool" {
     attribute_data_type = "String"
     name = "email"
     required = true
+    mutable = true
     string_attribute_constraints {
       max_length = "2048"
       min_length = "0"
@@ -33,6 +34,7 @@ resource "aws_cognito_user_pool" "pool" {
     attribute_data_type = "String"
     name = "name"
     required = true
+    mutable = true
     string_attribute_constraints {
       max_length = "2048"
       min_length = "0"

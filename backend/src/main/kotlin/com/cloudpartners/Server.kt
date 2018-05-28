@@ -20,6 +20,14 @@ class Server {
 
 }
 
+fun isDev(): Boolean {
+    return System.getProperty("ENVIRONMENT","DEV").equals("DEV")
+}
+
+fun frontendUrl(): String {
+    return System.getProperty("FRONTEND_URL","http://localhost:64896/")
+}
+
 class LocalDynamoDBHelper(private val client: AmazonDynamoDB) {
     private fun tableExists(name: String): Boolean {
         return try {
@@ -122,15 +130,16 @@ fun main(args: Array<String>) {
     }
     path("/isLoggedIn") {
         get("") { req, res ->
-            val a = req.cookie("auth")
-            if (a!=null) "YES" else "NO"
+            val a = req.cookie("auth") ?: return@get "NO"
+            if (isDev()) return@get "YES"
+            if (isJWTValid(a)) "YES" else "NO"
         }
     }
     path("/authenticate") {
         get("") {req,res ->
             val token = req.queryParams("token")
             res.cookie("auth", token)
-            res.redirect("http://localhost:64896/")
+            res.redirect(frontendUrl())
         }
     }
     path("/simulateCognito") {

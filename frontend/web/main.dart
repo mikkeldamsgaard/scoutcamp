@@ -11,7 +11,7 @@ void main() {
     if (isLoggedIn) {
       bootstrap(AppComponent);
     } else {
-      window.location.replace(signinUrl);
+      window.location.replace(cfg.signinUrl);
     }
   });
 }
