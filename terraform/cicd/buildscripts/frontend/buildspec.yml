@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - bash terraform/cicd/buildscripts/frontend/install.sh
+  build:
+    commands:
+      - bash terraform/cicd/buildscripts/frontend/build.sh
+  post_build:
+    commands:
+      - cp -r terraform/cicd/deploy/frontend/* frontend/build/
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'frontend/build'

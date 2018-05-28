@@ -1,0 +1,6 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - aws s3 cp --recursive web s3://$S3_DEPLOY_BUCKET/
