@@ -81,6 +81,10 @@ fun main(args: Array<String>) {
             null)
 
     print("Running")
+    print("Configuration: ")
+    print("  ENVIRONMENT="+System.getProperty("ENVIRONMENT"))
+    print("  FRONTEND_URL="+System.getProperty("FRONTEND_URL"))
+    print("  CONFIG_PROPERTIES="+System.getProperty("CONFIG_PROPERTIES"))
     val mapper = DynamoDBMapper(db.client)
     val jacksonObjectMapper = ObjectMapper().registerModule(KotlinModule())
     after(Filter({ req, res ->
