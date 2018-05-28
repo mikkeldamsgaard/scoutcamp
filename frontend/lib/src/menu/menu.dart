@@ -14,6 +14,7 @@ import 'package:angular_components/material_toggle/material_toggle.dart';
 
 import '../groups/groups.dart';
 import '../particiapants/participants.dart';
+import 'menu_msg.dart';
 
 @Component(
     selector: 'app-layout',
@@ -37,4 +38,5 @@ import '../particiapants/participants.dart';
 class MenuComponent {
   bool end = false;
   String menuItem = "register";
+  MenuMessages messages = new MenuMessages();
 }
