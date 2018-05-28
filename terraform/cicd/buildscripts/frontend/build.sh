@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 cd frontend
-pub build --mode=release --output=build
+/usr/lib/dart/bin/pub build --mode=release --output=build
 cd ..
 
