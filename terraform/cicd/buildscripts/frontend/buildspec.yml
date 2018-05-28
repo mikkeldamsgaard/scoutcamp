@@ -9,7 +9,7 @@ phases:
       - bash terraform/cicd/buildscripts/frontend/build.sh
   post_build:
     commands:
-      - cp -r terraform/cicd/deploy/frontend/* frontend/build/
+      - cp -r terraform/cicd/deploy/frontend/* frontend/build
 
 artifacts:
   files:
