@@ -8,16 +8,16 @@
         <div group class="mat-drawer-spacer"></div>
         <div group>
             <material-list-item (click)="menuItem='users'">
-                <material-icon icon="face"></material-icon>Users
+                <material-icon icon="face"></material-icon>{{messages.users()}}
             </material-list-item>
             <material-list-item (click)="menuItem='groups'">
-                <material-icon icon="group"></material-icon>Groups
+                <material-icon icon="group"></material-icon>{{messages.groups()}}
             </material-list-item>
             <material-list-item (click)="menuItem='activities'">
-                <material-icon icon="directions_walk"></material-icon>Activities
+                <material-icon icon="directions_walk"></material-icon>{{messages.activities()}}
             </material-list-item>
             <material-list-item (click)="menuItem='participants'">
-                <material-icon icon="person"></material-icon>Participants
+                <material-icon icon="person"></material-icon>{{messages.participants()}}
             </material-list-item>
         </div>
         <!--<div group>-->
@@ -41,6 +41,6 @@
     <div class="inner" [ngSwitch]="menuItem">
         <groups *ngSwitchCase="'groups'"></groups>
         <participants *ngSwitchCase="'participants'"></participants>
-        <div       *ngSwitchDefault>No choice</div>
+        <div       *ngSwitchDefault>{{messages.no_choice()}}</div>
     </div>
 </material-content>
