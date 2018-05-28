@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-cd frontned
+cd frontend
 pub build --mode=release --output=build
 cd ..
