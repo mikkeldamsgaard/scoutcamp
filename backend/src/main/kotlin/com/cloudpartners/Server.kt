@@ -21,11 +21,15 @@ class Server {
 }
 
 fun isDev(): Boolean {
-    return System.getProperty("ENVIRONMENT","DEV").equals("DEV")
+    return System.getProperty("ENVIRONMENT","local").equals("local")
 }
 
 fun frontendUrl(): String {
     return System.getProperty("FRONTEND_URL","http://localhost:64896/")
+}
+
+fun configFile(): String {
+    return System.getProperty("CONFIG_PROPERTIES","config.properties")
 }
 
 class LocalDynamoDBHelper(private val client: AmazonDynamoDB) {
@@ -47,7 +51,7 @@ class LocalDynamoDBHelper(private val client: AmazonDynamoDB) {
                         .filterNotNull()
 
         if (tableExists(name)) {
-            // TODO: Recreate table if structure has changed.
+            1 // TODO: Recreate table if structure has changed.
         } else {
             client.createTable(
                     CreateTableRequest()

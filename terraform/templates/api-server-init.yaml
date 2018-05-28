@@ -1,5 +1,22 @@
 #cloud-config
 write_files:
+  - path: /etc/config.properties
+    owner: root:root
+    permissions: '0755'
+    content: |
+      cognito_client_id=${cognito_client_id}
+      cognito_redirect_url=${cognito_redirect_url}
+      cognito_domain=${cognito_domain}
+      cognito_pool_id=${cognito_pool_id}
+
+  - path: /etc/envinfo.json
+    owner: root:root
+    permissions: '0755'
+    content: |
+      {
+        "env": "${env}"
+        "frontend_url": "${frontend_url}"
+      }
   - path: /usr/bin/server_boot
     owner: root:root
     permissions: '0755'
@@ -8,7 +25,7 @@ write_files:
 
       apt-get update
 
-      apt-get install unzip zip -y
+      apt-get install unzip zip jq ruby -y
 
       # install codedeploy agent
       REGION=`curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r .region`

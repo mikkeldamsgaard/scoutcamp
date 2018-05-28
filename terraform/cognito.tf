@@ -1,7 +1,7 @@
 resource "aws_cognito_user_pool" "pool" {
   lifecycle {
     # These two attributes in ignore changes are just terraform quirks. If you change values in schema, remember to comment out the next line
-    #ignore_changes = ["schema"]
+    ignore_changes = ["schema"]
   }
   name = "${terraform.workspace}"
 
