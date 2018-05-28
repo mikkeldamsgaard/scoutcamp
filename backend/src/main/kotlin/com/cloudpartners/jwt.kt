@@ -15,16 +15,11 @@ import java.math.BigInteger
 import java.security.KeyFactory
 import java.util.*
 
-
 val httpclient = HttpClients.createDefault()
 val jackson = ObjectMapper()
-const val client_id = "1t11gb442viqeqiokr22lr8ofe"
-const val url = "https://api-test.scoutcamp.gl26.dk/signin"
-const val cognito_domain = "scoutcamp-test.auth.eu-west-1.amazoncognito.com"
-const val pool_id = "eu-west-1_VNSorFmcM"
 
 fun isJWTValid(token: String): Boolean {
-    val key_url = "https://cognito-idp.eu-west-1.amazonaws.com/$pool_id/.well-known/jwks.json"
+    val key_url = "https://cognito-idp.eu-west-1.amazonaws.com/${Configuration.cognitoPoolId()}/.well-known/jwks.json"
 
     val httpGet = HttpGet(key_url)
     val resp = httpclient.execute(httpGet)
@@ -69,9 +64,9 @@ fun isJWTValid(token: String): Boolean {
 }
 
 fun codeToToken(code: String): String {
-    val httpPost = HttpPost("https://$cognito_domain/oauth2/token")
+    val httpPost = HttpPost("https://${Configuration.cognitoDomain()}/oauth2/token")
 
-    httpPost.entity = StringEntity("grant_type=authorization_code&client_id=$client_id&code=$code&redirect_uri=$url", ContentType.APPLICATION_FORM_URLENCODED)
+    httpPost.entity = StringEntity("grant_type=authorization_code&client_id=${Configuration.cognitoClientId()}&code=$code&redirect_uri=${Configuration.cognitoRedirectUrl()}", ContentType.APPLICATION_FORM_URLENCODED)
 
     val response = httpclient.execute(httpPost)
 

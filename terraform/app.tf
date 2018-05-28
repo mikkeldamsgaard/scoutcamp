@@ -50,7 +50,7 @@ resource "aws_autoscaling_group" "api" {
 resource "aws_launch_configuration" "api" {
   name_prefix = "${terraform.workspace}-api"
   image_id = "ami-7a187c03"
-  //iam_instance_profile = "${aws_iam_instance_profile.worker_and_api.name}"
+  iam_instance_profile = "${aws_iam_instance_profile.api.name}"
   instance_type = "t2.micro"
   key_name = "scoutcamp"
   root_block_device {
@@ -59,6 +59,47 @@ resource "aws_launch_configuration" "api" {
   security_groups = ["${aws_security_group.api-server.id}"]
   user_data = "${data.template_file.api-server-init.rendered}"
   lifecycle { create_before_destroy = true }
+}
+
+resource "aws_iam_instance_profile" "api" {
+  name_prefix = "${terraform.workspace}-api"
+  role = "${aws_iam_role.api.id}"
+}
+
+resource "aws_iam_role" "api" {
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Principal": {
+      "Service": [
+        "ec2.amazonaws.com"
+      ]
+    },
+    "Action": [
+      "sts:AssumeRole"
+    ]
+  }]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "api_s3_read_only_policy" {
+  name = "s3-read-only-policy"
+  role = "${aws_iam_role.api.id}"
+  policy = <<EOF
+{
+  "Statement": [{
+    "Effect": "Allow",
+    "Action": [
+      "s3:Get*",
+      "s3:List*"
+    ],
+    "Resource": "*"
+  }]
+}
+EOF
 }
 
 output "lb" {

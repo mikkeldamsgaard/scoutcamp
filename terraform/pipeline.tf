@@ -38,15 +38,28 @@ resource "aws_codepipeline" "cp" {
   stage {
     name = "Build"
     action {
-      name = "Build"
+      name = "Build-Backend"
       category = "Build"
       owner = "AWS"
       provider = "CodeBuild"
       version = "1"
       input_artifacts = ["SourceOutput"]
-      output_artifacts = ["BuildArtifact"]
+      output_artifacts = ["BuildBackendArtifact"]
       configuration {
-        ProjectName = "${aws_codebuild_project.build.name}"
+        ProjectName = "${aws_codebuild_project.build_backend.name}"
+      }
+    }
+
+    action {
+      name = "Build-Frontend"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      input_artifacts = ["SourceOutput"]
+      output_artifacts = ["BuildFrontendArtifact"]
+      configuration {
+        ProjectName = "${aws_codebuild_project.build_frontend.name}"
       }
     }
   }
@@ -54,22 +67,35 @@ resource "aws_codepipeline" "cp" {
   stage {
     name = "Deploy"
     action {
-      name= "DeployApp"
+      name= "Deploy-Backend"
       category = "Deploy"
       owner = "AWS"
       provider = "CodeDeploy"
       version = "1"
-      input_artifacts = ["BuildArtifact"]
+      input_artifacts = ["BuildBackendArtifact"]
       configuration {
         ApplicationName = "${aws_codedeploy_app.app.name}"
         DeploymentGroupName = "${aws_codedeploy_deployment_group.app.deployment_group_name}"
       }
       run_order = 1
     }
+
+    action {
+      name = "Deploy-Frontend"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      input_artifacts = ["BuildFrontendArtifact"]
+      output_artifacts = ["dummy"]
+      configuration {
+        ProjectName = "${aws_codebuild_project.deploy_frontend.name}"
+      }
+    }
   }
 }
 
-resource "aws_codebuild_project" "build" {
+resource "aws_codebuild_project" "build_backend" {
   artifacts {
     type = "CODEPIPELINE"
   }
@@ -78,10 +104,48 @@ resource "aws_codebuild_project" "build" {
     image = "aws/codebuild/ubuntu-base:14.04"
     type = "LINUX_CONTAINER"
   }
-  name = "${terraform.workspace}-build"
+  name = "${terraform.workspace}-build-backend"
   source {
     type = "CODEPIPELINE"
-    buildspec = "terraform/cicd/buildscripts/buildspec.yml"
+    buildspec = "terraform/cicd/buildscripts/backend/buildspec.yml"
+  }
+  service_role = "${aws_iam_role.codebuild.arn}"
+}
+
+resource "aws_codebuild_project" "build_frontend" {
+  artifacts {
+    type = "CODEPIPELINE"
+  }
+  environment {
+    compute_type = "BUILD_GENERAL1_LARGE"
+    image = "aws/codebuild/ubuntu-base:14.04"
+    type = "LINUX_CONTAINER"
+  }
+  name = "${terraform.workspace}-build-frontend"
+  source {
+    type = "CODEPIPELINE"
+    buildspec = "terraform/cicd/buildscripts/frontend/buildspec.yml"
+  }
+  service_role = "${aws_iam_role.codebuild.arn}"
+}
+
+resource "aws_codebuild_project" "deploy_frontend" {
+  artifacts {
+    type = "CODEPIPELINE"
+  }
+  environment {
+    compute_type = "BUILD_GENERAL1_SMALL"
+    image = "aws/codebuild/ubuntu-base:14.04"
+    type = "LINUX_CONTAINER"
+    environment_variable {
+      name = "S3_DEPLOY_BUCKET"
+      value = "${aws_s3_bucket.frontend.id}"
+    }
+  }
+  name = "${terraform.workspace}-deploy-frontend"
+  source {
+    type = "CODEPIPELINE"
+    buildspec = "buildspec.yml"
   }
   service_role = "${aws_iam_role.codebuild.arn}"
 }
