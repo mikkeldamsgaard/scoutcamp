@@ -2,9 +2,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.net.URI
 
 plugins {
-    kotlin("jvm") version "1.2.21"
+    kotlin("jvm") version "1.2.41"
     java
-    id("org.jetbrains.kotlin.kapt") version "1.2.21"
+    id("org.jetbrains.kotlin.kapt") version "1.2.41"
     application
 }
 

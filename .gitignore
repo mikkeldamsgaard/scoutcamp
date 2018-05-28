@@ -64,5 +64,6 @@ frontend/pubspec.lock
 doc/api/
 
 scoutcamp.db
+.idea/
 
 terraform/oauth.tf
