@@ -57,10 +57,14 @@ EOF
   }
 }
 
+locals {
+  cognito_callback_url = "https://api-${local.domain_name}/authenticate"
+}
+
 resource "aws_cognito_user_pool_client" "client" {
   name = "scoutcamp"
   user_pool_id = "${aws_cognito_user_pool.pool.id}"
-  callback_urls = ["https://api-${local.domain_name}/signin"]
+  callback_urls = ["${local.cognito_callback_url}"]
   logout_urls = ["https://api-${local.domain_name}/signout"]
   supported_identity_providers = ["COGNITO", "Google"]
   allowed_oauth_flows_user_pool_client = true
