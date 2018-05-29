@@ -10,21 +10,21 @@ resource "aws_instance" "bastion" {
   }
 }
 
-resource "aws_instance" "disk" {
-  ami = "ami-f90a4880"
-  instance_type = "c5.2xlarge"
-  key_name = "scoutcamp"
-  subnet_id = "${aws_subnet.b_private.id}"
-  vpc_security_group_ids = ["${aws_security_group.api-server.id}"]
-  #associate_public_ip_address = true
-  tags {
-    Name = "${terraform.env}-disk"
-  }
-}
-
-output "disk.ip" {
-  value = "${aws_instance.disk.private_ip}"
-}
+//resource "aws_instance" "disk" {
+//  ami = "ami-f90a4880"
+//  instance_type = "c5.2xlarge"
+//  key_name = "scoutcamp"
+//  subnet_id = "${aws_subnet.b_private.id}"
+//  vpc_security_group_ids = ["${aws_security_group.api-server.id}"]
+//  #associate_public_ip_address = true
+//  tags {
+//    Name = "${terraform.env}-disk"
+//  }
+//}
+//
+//output "disk.ip" {
+//  value = "${aws_instance.disk.private_ip}"
+//}
 
 
 //resource "aws_instance" "disk2" {

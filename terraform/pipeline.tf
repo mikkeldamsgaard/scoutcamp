@@ -120,6 +120,14 @@ resource "aws_codebuild_project" "build_frontend" {
     compute_type = "BUILD_GENERAL1_LARGE"
     image = "aws/codebuild/ubuntu-base:14.04"
     type = "LINUX_CONTAINER"
+    environment_variable {
+      name = "BACKEND_URL"
+      value = "https://${aws_alb.api.dns_name}/"
+    }
+    environment_variable {
+      name = "COGNITO_SIGNIN_URL"
+      value = "https://${aws_cognito_user_pool_domain.domain.domain}.auth.${data.aws_region.current.name}.amazoncognito.com/login?response_type=token&client_id=${aws_cognito_user_pool_client.client.id}&redirect_uri=https://api-${local.domain_name}/signin"
+    }
   }
   name = "${terraform.workspace}-build-frontend"
   source {

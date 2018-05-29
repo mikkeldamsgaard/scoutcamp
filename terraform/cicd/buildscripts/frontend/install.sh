@@ -9,3 +9,5 @@ sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/da
 sudo apt-get update
 sudo apt-get install dart -y
 
+sudo apt-get install python-pip -y
+pip install j2

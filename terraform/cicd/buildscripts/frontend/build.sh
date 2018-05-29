@@ -4,6 +4,8 @@ set -v -e
 
 cd frontend
 
+j2 lib/src/config/vars.template.dart > lib/src/config/vars.dart
+
 PATH="$PATH":"~/.pub-cache/bin"
 /usr/lib/dart/bin/pub global activate pub_mediator
 mediator
