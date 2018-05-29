@@ -145,14 +145,14 @@ fun main(args: Array<String>) {
     }
     path("/authenticate") {
         get("") {req,res ->
-            val token = req.queryParams("token")
+            val token = req.queryParams("id_token")
             res.cookie("auth", token)
             res.redirect(frontendUrl())
         }
     }
     path("/simulateCognito") {
         get("") { req,res ->
-            res.redirect("authenticate?token=1234")
+            res.redirect("authenticate?id_token=1234")
         }
     }
 
