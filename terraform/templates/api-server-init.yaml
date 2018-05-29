@@ -14,7 +14,7 @@ write_files:
     permissions: '0755'
     content: |
       {
-        "env": "${env}"
+        "env": "${env}",
         "frontend_url": "${frontend_url}"
       }
   - path: /usr/bin/server_boot
