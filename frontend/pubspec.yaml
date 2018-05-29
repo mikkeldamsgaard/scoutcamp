@@ -30,7 +30,7 @@ dependency_overrides:
   args: '0.13.7'
   angular_forms: '1.0.0'
   sass: '1.1.1'
-  analyzer: '0.29.11'
+  analyzer: '0.30.0+2'
 
 transformers:
 - sass_builder
