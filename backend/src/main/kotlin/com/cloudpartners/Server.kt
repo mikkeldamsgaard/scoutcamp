@@ -142,6 +142,7 @@ fun main(args: Array<String>) {
             if (a == "") return@get "NO"
             if (isDev()) return@get "YES"
             val token = String(Base64.getDecoder().decode(a), Charsets.UTF_8)
+            println("loaded token from cookie: $token")
             if (isJWTValid(token)) "YES" else "NO"
         }
     }
