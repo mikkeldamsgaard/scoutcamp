@@ -82,3 +82,9 @@ data class HelperParticipation(
         var isMidday: Boolean = true,
         var isEvening: Boolean = true
 )
+
+@DynamoDBTable(tableName="session")
+data class Session(
+        @DynamoDBHashKey var sessionId: String = "",
+        var token: String = ""
+)

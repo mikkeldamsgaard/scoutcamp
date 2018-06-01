@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.model.*
 import com.cloudpartners.local.LocalDynamoDB
 import com.cloudpartners.model.Group
 import com.cloudpartners.model.Participant
+import com.cloudpartners.model.Session
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import spark.Filter
@@ -79,6 +80,11 @@ fun main(args: Array<String>) {
             Arrays.asList(AttributeDefinition("id", "S")),
             "id",
             null)
+    tableHelper.createOrUpdate(
+            "session",
+            Arrays.asList(AttributeDefinition("sessionId", "S")),
+            "sessionId",
+            null)
 
     println("Running")
     println("Configuration: ")
@@ -140,9 +146,10 @@ fun main(args: Array<String>) {
         get("") { req, res ->
             val a = req.cookie("auth") ?: return@get "NO"
             if (a == "") return@get "NO"
-            if (isDev()) return@get "YES"
-            val token = String(Base64.getDecoder().decode(a), Charsets.UTF_8)
+            val session = mapper.load(Session::class.java, a)
+            val token = session.token
             println("loaded token from cookie: $token")
+            if (isDev()) return@get "YES"
             if (isJWTValid(token)) "YES" else "NO"
         }
     }
@@ -152,7 +159,9 @@ fun main(args: Array<String>) {
             println("Received code: $code")
             val token = if (isDev()) code else codeToToken(code)
             println("Code resolved to token $token")
-            res.cookie("auth", Base64.getEncoder().encodeToString(token.toByteArray()))
+            val sessionId = UUID.randomUUID().toString()
+            res.cookie("auth", sessionId)
+            mapper.save(Session(sessionId, token))
             res.redirect(frontendUrl())
         }
     }
