@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
+import 'package:scoutcamp/src/messages/messages.dart';
 import 'package:uuid/uuid.dart';
 
 import 'groups_service.dart';
@@ -19,6 +20,8 @@ import 'group.dart';
   providers: const [GroupsService],
 )
 class GroupsComponent implements OnInit {
+  Messages messages = Messages.defaultLocale();
+
   final GroupsService groupsService;
 
   List<Group> groups = [];

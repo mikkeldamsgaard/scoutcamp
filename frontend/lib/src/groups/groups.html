@@ -4,66 +4,66 @@
         <li *ngFor="let group of groups; let i=index">
             <div *ngIf="selectedGroup != group">
                 <span >{{group.name}}</span>
-                <material-fab mini (trigger)="remove(i)" materialTooltip="Delete this group">
+                <material-fab mini (trigger)="remove(i)" materialTooltip="{{messages.group_delete()}}">
                     <material-icon icon="delete" ></material-icon>
                 </material-fab>
-                <material-fab mini (trigger)="selectedGroup = group" materialTooltip="Edit this group">
+                <material-fab mini (trigger)="selectedGroup = group" materialTooltip="{{messages.group_edit()}}">
                     <glyph icon="edit"></glyph>
                 </material-fab>
             </div>
             <div *ngIf="selectedGroup == group">
-                <material-input label="Group name"
+                <material-input label="{{messages.group_name()}}"
                                 autoFocus floatingLabel style="width:80%"
                                 [(ngModel)]="selectedGroup.name">
                 </material-input>
 
-                <material-input label="Contact Name"
+                <material-input label="{{messages.contact_name()}}"
                                 floatingLabel style="width:80%"
                                 [(ngModel)]="selectedGroup.contactName">
                 </material-input>
 
-                <material-input label="Contact email"
+                <material-input label="{{messages.contact_email()}}"
                                 floatingLabel style="width:80%"
                                 [(ngModel)]="selectedGroup.contactEmail">
                 </material-input>
 
-                <material-input label="Contact address"
+                <material-input label="{{messages.contact_address()}}"
                                 floatingLabel style="width:80%"
                                 [(ngModel)]="selectedGroup.contactAddress">
                 </material-input>
 
-                <material-input label="Contact zip"
+                <material-input label="{{messages.contact_zip()}}"
                                 floatingLabel style="width:80%"
                                 [(ngModel)]="selectedGroup.contactZip">
                 </material-input>
 
-                <material-input label="Contact city"
+                <material-input label="{{messages.contact_city()}}"
                                 floatingLabel style="width:80%"
                                 [(ngModel)]="selectedGroup.contactCity">
                 </material-input>
 
-                <material-input label="Contact country"
+                <material-input label="{{messages.contact_country()}}"
                                 floatingLabel style="width:80%"
                                 [(ngModel)]="selectedGroup.contactCountry">
                 </material-input>
 
-                <material-input label="Accounting contact name"
+                <material-input label="{{messages.account_contact_name()}}"
                                 floatingLabel style="width:80%"
                                 [(ngModel)]="selectedGroup.accountingName">
                 </material-input>
 
 
-                <material-input label="Account number"
+                <material-input label="{{messages.account_number()}}"
                                 floatingLabel style="width:80%"
                                 [(ngModel)]="selectedGroup.accountingAccountNo">
                 </material-input>
 
-                <material-input label="Accounting contact phone number"
+                <material-input label="{{messages.account_contact_phone()}}"
                                 floatingLabel style="width:80%"
                                 [(ngModel)]="selectedGroup.accountingPhone">
                 </material-input>
 
-                <material-input label="Accounting contact phone number"
+                <material-input label="{{messages.account_contact_email()}}"
                                 floatingLabel style="width:80%"
                                 [(ngModel)]="selectedGroup.accountingEmail">
                 </material-input>
@@ -71,10 +71,10 @@
 
                 <div>
                     <material-button (trigger)="save()" >
-                        Save
+                        {{messages.button_save()}}
                     </material-button>
                     <material-button (trigger)="cancel()" >
-                        Cancel
+                        {{messages.button_cancel()}}
                     </material-button>
                 </div>
             </div>
@@ -83,11 +83,11 @@
 </div>
 
 <p *ngIf="groups.isEmpty">
-    No groups! Register one or more groups
+    {{messages.groups_empty()}}
 </p>
 
 <div>
     <material-button (trigger)="add()" >
-       Register new group
+        {{messages.group_new()}}
     </material-button>
 </div>
