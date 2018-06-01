@@ -126,7 +126,7 @@ resource "aws_codebuild_project" "build_frontend" {
     }
     environment_variable {
       name = "COGNITO_SIGNIN_URL"
-      value = "https://${aws_cognito_user_pool_domain.domain.domain}.auth.${data.aws_region.current.name}.amazoncognito.com/login?response_type=token&client_id=${aws_cognito_user_pool_client.client.id}&redirect_uri=${local.cognito_callback_url}"
+      value = "https://${aws_cognito_user_pool_domain.domain.domain}.auth.${data.aws_region.current.name}.amazoncognito.com/login?response_type=code&client_id=${aws_cognito_user_pool_client.client.id}&redirect_uri=${local.cognito_callback_url}"
     }
   }
   name = "${terraform.workspace}-build-frontend"

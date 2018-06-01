@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.model.*
 import com.cloudpartners.local.LocalDynamoDB
 import com.cloudpartners.model.Group
 import com.cloudpartners.model.Participant
+import com.cloudpartners.model.Session
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import spark.Filter
@@ -79,6 +80,11 @@ fun main(args: Array<String>) {
             Arrays.asList(AttributeDefinition("id", "S")),
             "id",
             null)
+    tableHelper.createOrUpdate(
+            "session",
+            Arrays.asList(AttributeDefinition("sessionId", "S")),
+            "sessionId",
+            null)
 
     println("Running")
     println("Configuration: ")
@@ -139,21 +145,29 @@ fun main(args: Array<String>) {
     path("/isLoggedIn") {
         get("") { req, res ->
             val a = req.cookie("auth") ?: return@get "NO"
-            if (isDev()) return@get "YES"
             if (a == "") return@get "NO"
-            if (isJWTValid(a)) "YES" else "NO"
+            val session = mapper.load(Session::class.java, a)
+            val token = session.token
+            println("loaded token from cookie: $token")
+            if (isDev()) return@get "YES"
+            if (isJWTValid(token)) "YES" else "NO"
         }
     }
     path("/authenticate") {
         get("") {req,res ->
-            val token = req.queryParams("id_token")
-            res.cookie("auth", token)
+            val code = req.queryParams("code")
+            println("Received code: $code")
+            val token = if (isDev()) code else codeToToken(code)
+            println("Code resolved to token $token")
+            val sessionId = UUID.randomUUID().toString()
+            res.cookie("auth", sessionId)
+            mapper.save(Session(sessionId, token))
             res.redirect(frontendUrl())
         }
     }
     path("/simulateCognito") {
         get("") { req,res ->
-            res.redirect("authenticate?id_token=1234")
+            res.redirect("authenticate?code=1234")
         }
     }
 
