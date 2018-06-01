@@ -139,9 +139,10 @@ fun main(args: Array<String>) {
     path("/isLoggedIn") {
         get("") { req, res ->
             val a = req.cookie("auth") ?: return@get "NO"
-            if (isDev()) return@get "YES"
             if (a == "") return@get "NO"
-            if (isJWTValid(a)) "YES" else "NO"
+            if (isDev()) return@get "YES"
+            val token = String(Base64.getDecoder().decode(a), Charsets.UTF_8)
+            if (isJWTValid(token)) "YES" else "NO"
         }
     }
     path("/authenticate") {
@@ -150,7 +151,7 @@ fun main(args: Array<String>) {
             println("Received code: $code")
             val token = if (isDev()) code else codeToToken(code)
             println("Code resolved to token $token")
-            res.cookie("auth", token)
+            res.cookie("auth", Base64.getEncoder().encodeToString(token.toByteArray()))
             res.redirect(frontendUrl())
         }
     }
