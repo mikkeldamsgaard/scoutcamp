@@ -6,11 +6,6 @@ import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_components/app_layout/material_persistent_drawer.dart';
 import 'package:angular_components/content/deferred_content.dart';
-import 'package:angular_components/material_button/material_button.dart';
-import 'package:angular_components/material_icon/material_icon.dart';
-import 'package:angular_components/material_list/material_list.dart';
-import 'package:angular_components/material_list/material_list_item.dart';
-import 'package:angular_components/material_toggle/material_toggle.dart';
 
 import '../groups/groups.dart';
 import '../particiapants/participants.dart';
@@ -20,12 +15,7 @@ import 'package:scoutcamp/src/messages/messages.dart';
     selector: 'app-layout',
     directives: const [
       DeferredContentDirective,
-      MaterialButtonComponent,
-      MaterialIconComponent,
-      MaterialListComponent,
-      MaterialListItemComponent,
-      MaterialPersistentDrawerDirective,
-      MaterialToggleComponent,
+      materialDirectives,
       CORE_DIRECTIVES,
       GroupsComponent,
       ParticipantsComponent
@@ -34,9 +24,18 @@ import 'package:scoutcamp/src/messages/messages.dart';
     styleUrls: const [
       'package:angular_components/app_layout/layout.scss.css',
       'menu.css',
-    ])
+    ]
+)
 class MenuComponent {
   bool end = false;
   String menuItem = "register";
   Messages messages = Messages.defaultLocale();
+
+  MenuComponent();
+
+  void changeLanguage(String language) {
+    Messages.changeLanguage(language);
+    messages = Messages.defaultLocale();
+    menuItem = "register";
+  }
 }

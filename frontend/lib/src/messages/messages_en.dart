@@ -2,6 +2,9 @@ import 'messages.dart';
 
 /// Definitions of english text, which also are default
 class Messages_en extends Messages {
+	String language() => "en";
+	String language_full() => "English";
+
 	String users() => "Users";
 	String groups() => "Groups";
 	String activities() => "Activities";
@@ -23,5 +26,6 @@ class Messages_en extends Messages {
 	String group_edit() => "Edit this Group";
 	String group_name() => "Group Name";
 	String group_new() => "Register new Group";
+	String group_new_name() => "New Group";
 	String groups_empty() => "No Groups! Register one or more groups";
 }

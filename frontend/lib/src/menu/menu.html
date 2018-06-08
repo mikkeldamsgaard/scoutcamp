@@ -20,6 +20,14 @@
                 <material-icon icon="person"></material-icon>{{messages.participants()}}
             </material-list-item>
         </div>
+        <div group>
+            <material-list-item *ngIf="messages.language() != 'da'" (trigger)="changeLanguage('da')">
+                <img src="images/flag_da.png" style="margin-right: 24px"/>{{messages.danish()}}
+            </material-list-item>
+            <material-list-item *ngIf="messages.language() != 'en'" (trigger)="changeLanguage('en')">
+                <img src="images/flag_en.png" style="margin-right: 24px"/>{{messages.english()}}
+            </material-list-item>
+        </div>
         <!--<div group>-->
             <!--<div label>Tags</div>-->
             <!--<material-list-item (click)="menuItem='favorites'">-->

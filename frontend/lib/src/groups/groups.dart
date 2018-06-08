@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
@@ -17,11 +18,10 @@ import 'group.dart';
     CORE_DIRECTIVES,
     materialDirectives,
   ],
-  providers: const [GroupsService],
+  providers: const [GroupsService]
 )
 class GroupsComponent implements OnInit {
-  Messages messages = Messages.defaultLocale();
-
+  final Messages messages = Messages.defaultLocale();
   final GroupsService groupsService;
 
   List<Group> groups = [];
@@ -37,7 +37,7 @@ class GroupsComponent implements OnInit {
   void add() {
     var group = new Group();
     var uuid = new Uuid();
-    group.name="New group";
+    group.name=messages.group_new_name();
     group.id = uuid.v1();
     groups.add(group);
     selectedGroup=group;
@@ -60,5 +60,6 @@ class GroupsComponent implements OnInit {
 
   void onReorder(ReorderEvent e) =>
       groups.insert(e.destIndex, groups.removeAt(e.sourceIndex));
+
 }
 

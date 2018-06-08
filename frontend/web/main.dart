@@ -6,13 +6,17 @@ import 'package:scoutcamp/src/config/vars.dart';
 
 import 'dart:html';
 
+import 'package:scoutcamp/src/messages/messages.dart';
+
 void main() {
   Intl.systemLocale = Intl.canonicalizedLocale(window.navigator.language);
-  Intl.defaultLocale = Intl.systemLocale;
+  if (Intl.defaultLocale == null) {
+    Intl.defaultLocale = Intl.systemLocale;
+  }
 
   loggedIn().then((isLoggedIn) {
     if (isLoggedIn) {
-      bootstrap(AppComponent);
+      bootstrap(AppComponent, [provide(Messages, useFactory: Messages.defaultLocale )]);
     } else {
       window.location.replace(cfg.signinUrl);
     }

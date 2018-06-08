@@ -2,6 +2,9 @@ import 'messages.dart';
 
 /// Definitions of danish text,
 class Messages_da extends Messages {
+	String language() => "da";
+	String language_full() => "Dansk";
+
 	String users() => "Brugere";
 	String groups() => "Grupper";
 	String activities() => "Aktiviteter";
@@ -24,5 +27,6 @@ class Messages_da extends Messages {
 	String group_edit() => "Ret denne gruppe";
 	String group_name() => "Gruppe navn";
 	String group_new() => "Opret ny gruppe";
+	String group_new_name() => "Ny gruppe";
 	String groups_empty() => "Ingen grupper! Opret en eller flere grupper";
 }
