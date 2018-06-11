@@ -13,6 +13,7 @@ void main() {
   if (Intl.defaultLocale == null) {
     Intl.defaultLocale = Intl.systemLocale;
   }
+  Messages.changeLanguage(Intl.defaultLocale);
 
   loggedIn().then((isLoggedIn) {
     if (isLoggedIn) {

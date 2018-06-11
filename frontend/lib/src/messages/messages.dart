@@ -1,4 +1,6 @@
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:pikaday/pikaday.dart';
 import 'messages_da.dart';
 import 'messages_en.dart';
 import 'package:angular/di.dart';
@@ -11,6 +13,7 @@ abstract class Messages {
 
 	static Messages locale(String locale) {
 		if (locale == null || locale.length < 2) locale = "en";
+		initializeDateFormatting(locale);
 		switch (Intl.shortLocale(locale)) {
 			case 'da': return new Messages_da();
 			default : return new Messages_en();
@@ -20,12 +23,23 @@ abstract class Messages {
 	static Messages defaultLocale() => locale(Intl.defaultLocale);
 	static const provider = const Provider(Messages,	useFactory: defaultLocale);
 
+	static void changeLanguage(String language) {
+		Intl.defaultLocale = language;
+	}
+
 /* definitions of messages function, it is possible to add methods having parameter if the sting should be interpolated. */
 	String language();
 	String language_full();
 
 	String danish() => "Dansk";
 	String english() => "English";
+
+	String date_day_format() => "DD-MM-YYYY";
+	String date_day(DateTime date) {
+		var formatter = new DateFormat("dd-MM-yyyy");
+	  return formatter.format(date);
+	}
+	PikadayI18nConfig	pickaday_config();
 
 	String users();
 	String groups();
@@ -56,11 +70,34 @@ abstract class Messages {
 
 
 	String button_save();
+	String button_save_add_similar();
 	String button_cancel();
+	String button_close();
 
-  static void changeLanguage(String language) {
-		Intl.defaultLocale = language;
-	}
+  String participant_new();
+	String participant_delete();
+	String participant_edit();
+	String participant_name();
+	String participant_birthday();
+
+	String participation_new();
+	String participation_delete();
+	String participation_edit();
+	String participation_type_label();
+	String participation_type(String type);
+	String participation_date();
+	String participation_morning();
+	String participation_midday();
+	String participation_evening();
+
+	String diet_vegan();
+	String diet_vegetarian();
+	String diet_muslim();
+	String diet_kosher();
+	String diet_gluten_allergy();
+	String diet_other_allergies();
+
+	String electricity_special_needs();
 
 
 }

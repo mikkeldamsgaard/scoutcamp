@@ -7,6 +7,7 @@ import 'package:pikaday_datepicker_angular/pikaday_datepicker_angular.dart';
 
 import 'participants_service.dart';
 import 'participant.dart';
+import 'package:scoutcamp/src/messages/messages.dart';
 
 
 @Component(
@@ -22,6 +23,7 @@ import 'participant.dart';
 )
 class ParticipantsComponent implements OnInit {
   final ParticipantsService participantsService;
+  Messages messages = Messages.defaultLocale();
 
   List<Participant> participants = [];
   Participant selectedParticipant;
@@ -42,7 +44,7 @@ class ParticipantsComponent implements OnInit {
   void internalAdd(List<Participation> participations) {
     var uuid = new Uuid();
     var participant = new Participant()
-      ..name="New participant"
+      ..name= messages.participant_new()
       ..id = uuid.v1()
       ..birthdayDate = new DateTime(2000,1,1)
       ..participations=participations;
