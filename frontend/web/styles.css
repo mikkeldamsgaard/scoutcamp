@@ -89,7 +89,7 @@ input[type="reset"]:hover, input[type="button"]:hover, input[type="submit"]:hove
 
 body.ssc2019 {
     background-color: #e0e0e0;
-    background-image: url("http://ssc2019.dk/wp-content/themes/travelify/images/background.png");
+    background-image: url("./background.png");
     background-position: left top;
     background-size: auto;
     background-repeat: repeat;
