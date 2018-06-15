@@ -48,6 +48,7 @@ abstract class Messages {
 	String no_choice();
 
 	// Group texts
+	String group_title();
 	String group_new();
 	String group_delete();
 	String group_edit();
@@ -74,6 +75,7 @@ abstract class Messages {
 	String button_cancel();
 	String button_close();
 
+	String participant_title();
   String participant_new();
 	String participant_delete();
 	String participant_edit();

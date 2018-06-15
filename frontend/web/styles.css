@@ -1,12 +1,121 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 @import url(https://fonts.googleapis.com/css?family=Material+Icons);
 
-body {
-/*   max-width: 600px; */
-  margin: 0 auto;
-  padding: 5vw;
+* {
+    font-family: Helvetica, sans-serif;
 }
 
-* {
-  font-family: Roboto, Helvetica, Arial, sans-serif;
+/* from http://ssc2019.dk */
+#site-title a {
+    color: #de9f25;
+}
+
+#site-title a:hover {
+    color: #de9f25;
+}
+
+.wrapper {
+    background: #F8F8F8;
+}
+
+.social-icons ul li a {
+    color: #4c200f;
+}
+
+#main-nav a, #main-nav a:hover, #main-nav a:focus, #main-nav ul li.current-menu-item a, #main-nav ul li.current_page_ancestor a, #main-nav ul li.current-menu-ancestor a, #main-nav ul li.current_page_item a, #main-nav ul li:hover > a {
+    color: #000000;
+}
+
+.widget, article {
+    background: #fff;
+}
+
+.entry-title, .entry-title a, .entry-title a:focus, h1, h2, h3, h4, h5, h6, .widget-title {
+    color: #1b1e1f;
+}
+
+a:focus, a:active, a:hover, .tags a:hover, .custom-gallery-title a, .widget-title a, #content ul a:hover, #content ol a:hover, .widget ul li a:hover, .entry-title a:hover, .entry-meta a:hover, #site-generator .copyright a:hover {
+    color: #d36558;
+}
+
+#main-nav {
+    background: #de9f25;
+    border-color: #de9f25;
+}
+
+#main-nav ul li ul, body {
+    border-color: #de9f25;
+}
+
+#main-nav a:hover, #main-nav ul li.current-menu-item a, #main-nav ul li.current_page_ancestor a, #main-nav ul li.current-menu-ancestor a, #main-nav ul li.current_page_item a, #main-nav ul li:hover > a, #main-nav li:hover > a, #main-nav ul ul :hover > a, #main-nav a:focus {
+    background: #de9f25;
+}
+
+#main-nav ul li ul li a:hover, #main-nav ul li ul li:hover > a, #main-nav ul li.current-menu-item ul li a:hover {
+    color: #de9f25;
+}
+
+.entry-content {
+    color: #1D1D1D;
+}
+
+input[type="reset"], input[type="button"], input[type="submit"], .entry-meta-bar .readmore, #controllers a:hover, #controllers a.active, .pagination span, .pagination a:hover span, .wp-pagenavi .current, .wp-pagenavi a:hover {
+    background: #de9f25;
+    border-color: #de9f25 !important;
+}
+
+::selection {
+    background: #de9f25;
+}
+
+blockquote {
+    border-color: #de9f25;
+}
+
+#controllers a:hover, #controllers a.active {
+    color: #de9f25;
+}
+
+input[type="reset"]:hover, input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:active, input[type="button"]:active, input[type="submit"]:active, .entry-meta-bar .readmore:hover, .entry-meta-bar .readmore:active, ul.default-wp-page li a:hover, ul.default-wp-page li a:active {
+    background: #de9f25;
+    border-color: #de9f25;
+}
+
+.recentcomments a {
+    display: inline !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+body.ssc2019 {
+    background-color: #e0e0e0;
+    background-image: url("http://ssc2019.dk/wp-content/themes/travelify/images/background.png");
+    background-position: left top;
+    background-size: auto;
+    background-repeat: repeat;
+    background-attachment: scroll;
+}
+
+/* from http://ssc2019.dk overrides of material-desig defaults to match colors and fonts */
+.material-header {
+    background: #de9f25 !important;
+}
+
+.scc2019-menu {
+    background: #de9f25 !important;
+    color: #000  !important;
+    box-shadow: none !important;
+}
+.scc2019-app{
+    background: #F8F8F8 !important;
+    border: 0px !important;
+}
+
+.scc2019-content{
+    background: #FFFFFF !important;
+}
+
+.entry-title {
+    font: 24px 'Ubuntu', sans-serif  !important;
+    line-height: 1.4em  !important;
 }

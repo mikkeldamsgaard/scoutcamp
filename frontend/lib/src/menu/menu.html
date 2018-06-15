@@ -4,7 +4,7 @@
   BSD-style license that can be found in the LICENSE file.
 -->
 <material-drawer persistent #drawer="drawer" [attr.end]="end ? '' : null">
-    <material-list *deferredContent>
+    <material-list *deferredContent class="scc2019-menu">
         <div group class="mat-drawer-spacer"></div>
         <div group>
             <material-list-item (click)="menuItem='users'">
@@ -37,7 +37,7 @@
     </material-list>
 </material-drawer>
 <material-content>
-    <header class="material-header shadow">
+    <header class="material-header shadow scc2019-menu">
         <div class="material-header-row">
             <material-button icon
                              class="material-drawer-button" (trigger)="drawer.toggle()">
@@ -46,7 +46,7 @@
             <span class="material-header-title">SSC 2019</span>
         </div>
     </header>
-    <div class="inner" [ngSwitch]="menuItem">
+    <div class="inner scc2019-content" [ngSwitch]="menuItem">
         <groups *ngSwitchCase="'groups'"></groups>
         <participants *ngSwitchCase="'participants'"></participants>
         <div       *ngSwitchDefault>{{messages.no_choice()}}</div>

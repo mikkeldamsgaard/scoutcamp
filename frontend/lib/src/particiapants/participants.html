@@ -1,5 +1,6 @@
 <!-- Components info: https://webdev.dartlang.org/components -->
 <div *ngIf="participants.isNotEmpty">
+    <h2 class="entry-title">{{messages.participant_title()}} </h2>
     <ul>
         <li *ngFor="let participant of participants; let i=index">
             <div *ngIf="selectedParticipant != participant">

@@ -34,6 +34,8 @@ class Messages_en extends Messages {
 	String contact_email() => "Contact Email";
 	String contact_name() => "Contact Name";
 	String contact_zip() => "Contact Zip";
+
+	String group_title() => "Groups";
 	String group_delete() => "Delete this Group";
 	String group_edit() => "Edit this Group";
 	String group_name() => "Group Name";
@@ -41,6 +43,7 @@ class Messages_en extends Messages {
 	String group_new_name() => "New Group";
 	String groups_empty() => "No Groups! Register one or more groups";
 
+	String participant_title() => "Participants";
 	String participant_new() => "New Participant";
 	String participant_delete() => "Delete this Participant";
 	String participant_edit() => "Edit this Participant";

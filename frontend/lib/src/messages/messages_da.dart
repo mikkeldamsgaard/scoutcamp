@@ -36,6 +36,8 @@ class Messages_da extends Messages {
 	String contact_email() => "Kontakt email";
 	String contact_name() => "Kontaktnavn";
 	String contact_zip() => "Kontakt postnummer";
+
+	String group_title() => "Grupper";
 	String group_delete() => "Slet denne gruppe";
 	String group_edit() => "Ret denne gruppe";
 	String group_name() => "Gruppe navn";
@@ -43,6 +45,7 @@ class Messages_da extends Messages {
 	String group_new_name() => "Ny gruppe";
 	String groups_empty() => "Ingen grupper! Opret en eller flere grupper";
 
+	String participant_title() => "Deltagere";
   String participant_new() => "Ny deltager";
 	String participant_delete() => "Slet denne deltager";
 	String participant_edit() => "Ret denne deltager";
