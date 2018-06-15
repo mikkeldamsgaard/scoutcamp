@@ -53,7 +53,7 @@ abstract class Messages {
 	String group_delete();
 	String group_edit();
 	String groups_empty();
-	String group_new_name() {}
+	String group_new_name();
 
 	String group_name();
 
