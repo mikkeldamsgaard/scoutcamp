@@ -19,7 +19,7 @@
                 </material-input>
 
                 <div>
-                    <label>Birthday</label>
+                    <label>{{messages.participant_birthday()}}</label>
                     <pikaday [(day)]="selectedParticipant.birthdayDate" format="{{messages.date_day_format()}}"
                              placeholder="{{messages.participant_birthday()}}"  [i18n]="messages.pickaday_config()">
                     </pikaday>
