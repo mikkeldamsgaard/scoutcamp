@@ -8,6 +8,7 @@ import com.cloudpartners.local.LocalDynamoDB
 import com.cloudpartners.model.Group
 import com.cloudpartners.model.Participant
 import com.cloudpartners.model.Session
+import com.cloudpartners.model.UserInfo
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import spark.Filter
@@ -100,6 +101,17 @@ fun main(args: Array<String>) {
         res.header("Access-Control-Allow-Credentials", "true")
     }))
     options("/*") { _,_ -> "ok"}
+    path("/user") {
+        get("/info") { req, res ->
+            var info : UserInfo = UserInfo.Development.user()
+            if (isDev()) {
+            } else {
+                val claims = getJWTClaims("string").body
+                info =  UserInfo(claims.subject, claims.get("name")?.toString() ?: "", claims.get("email")?.toString()  ?: "")
+            }
+            jacksonObjectMapper.writeValueAsString(info)
+        }
+    }
     path("/groups") {
         get("") { req, res ->
             jacksonObjectMapper.writeValueAsString(mapper.scan(Group::class.java, DynamoDBScanExpression()))

@@ -96,13 +96,16 @@ body.ssc2019 {
     background-attachment: scroll;
 }
 
-/* from http://ssc2019.dk overrides of material-desig defaults to match colors and fonts */
-.material-header {
-    background: #de9f25 !important;
+/* from http://ssc2019.dk overrides of material-desig defaults to match colors and fonts, overrides using material _mixins in app_component.scss */
+
+$scc2019back: #de9f25;
+
+::ng-deep .material-header {
+    background: $scc2019back;
 }
 
 .scc2019-menu {
-    background: #de9f25 !important;
+    background: $scc2019back !important;
     color: #000  !important;
     box-shadow: none !important;
 }

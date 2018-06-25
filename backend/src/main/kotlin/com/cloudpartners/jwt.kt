@@ -18,6 +18,10 @@ import java.util.*
 val httpclient = HttpClients.createDefault()
 val jackson = ObjectMapper()
 
+fun getJWTClaims(token: String) : Jws<Claims> {
+    return Jwts.parser().parseClaimsJws(token)
+}
+
 fun isJWTValid(token: String): Boolean {
     try {
         val key_url = "https://cognito-idp.eu-west-1.amazonaws.com/${Configuration.cognitoPoolId()}/.well-known/jwks.json"

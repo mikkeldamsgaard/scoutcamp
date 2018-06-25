@@ -6,6 +6,7 @@ import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_components/app_layout/material_persistent_drawer.dart';
 import 'package:angular_components/content/deferred_content.dart';
+import 'package:scoutcamp/src/users/userinfo.dart';
 
 import '../groups/groups.dart';
 import '../particiapants/participants.dart';
@@ -18,7 +19,8 @@ import 'package:scoutcamp/src/messages/messages.dart';
       materialDirectives,
       CORE_DIRECTIVES,
       GroupsComponent,
-      ParticipantsComponent
+      ParticipantsComponent,
+      UserInfoComponent
     ],
     templateUrl: 'menu.html',
     styleUrls: const [

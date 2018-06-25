@@ -1,0 +1,12 @@
+:host {
+    /* This is equivalent of the 'body' selector of a page. */
+}
+
+@import 'package:angular_components/css/material/material';
+@import 'package:angular_components/material_input/mixins';
+
+$scc2019back: #de9f25;
+
+@include material-input-theme($scc2019back);
+@include material-input-focused-underline-color($scc2019back);
+@include input-label-color($scc2019back);
