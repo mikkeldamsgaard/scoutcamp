@@ -168,7 +168,7 @@ fun main(args: Array<String>) {
             if (session == null) return@get "NO"
 
             val token = session.token
-            println("loaded token from cookie: $token")
+
             if (isDev()) return@get "YES"
             if (isJWTValid(token)) "YES" else "NO"
         }
@@ -199,5 +199,7 @@ private fun session(req: Request, mapper: DynamoDBMapper): Session? {
     if (a != null) {
         session = mapper.load(Session::class.java, a)
     }
+    val token = session?.token
+    println("loaded token from cookie: $token")
     return session
 }
