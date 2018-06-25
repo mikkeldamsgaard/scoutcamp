@@ -19,7 +19,7 @@ class UserService {
   server() => configService.server()+"user";
 
   Future<UserInfo> getUserInfo() async {
-    return HttpRequest.getString(server() + "/info").then((r) {
+    return HttpRequest.getString(server() + "/info", withCredentials: true).then((r) {
       Map reply = JSON.decode(r);
       UserInfo result = dson.map(reply, new UserInfo());
       return result;
