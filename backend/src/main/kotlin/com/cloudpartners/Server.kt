@@ -12,6 +12,7 @@ import com.cloudpartners.model.UserInfo
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import spark.Filter
+import spark.Request
 import spark.Service
 import java.io.File
 import java.util.*
@@ -103,13 +104,18 @@ fun main(args: Array<String>) {
     options("/*") { _,_ -> "ok"}
     path("/user") {
         get("/info") { req, res ->
-            var info : UserInfo = UserInfo.Development.user()
+            var info : UserInfo = UserInfo.development()
             if (isDev()) {
             } else {
-                val session = mapper.load(Session::class.java, a)
-                val token = session.token
-                val claims = getJWTClaims(token).body
-                info =  UserInfo(claims.subject, claims.get("name")?.toString() ?: "", claims.get("email")?.toString()  ?: "")
+                val session: Session? = session(req, mapper)
+                if (session != null) {
+                    val token = session.token
+                    val claims = getJWTClaims(token).body
+                    info = UserInfo(claims.subject, claims.get("name")?.toString()
+                            ?: "", claims.get("email")?.toString() ?: "")
+                } else {
+                    info = UserInfo.notLoggedIn()
+                }
             }
             jacksonObjectMapper.writeValueAsString(info)
         }
@@ -158,9 +164,9 @@ fun main(args: Array<String>) {
     }
     path("/isLoggedIn") {
         get("") { req, res ->
-            val a = req.cookie("auth") ?: return@get "NO"
-            if (a == "") return@get "NO"
-            val session = mapper.load(Session::class.java, a)
+            var session: Session? = session(req, mapper)
+            if (session == null) return@get "NO"
+
             val token = session.token
             println("loaded token from cookie: $token")
             if (isDev()) return@get "YES"
@@ -185,4 +191,13 @@ fun main(args: Array<String>) {
         }
     }
 
+}
+
+private fun session(req: Request, mapper: DynamoDBMapper): Session? {
+    val a: String? = req.cookie("auth")
+    var session: Session? = null
+    if (a != null) {
+        session = mapper.load(Session::class.java, a)
+    }
+    return session
 }

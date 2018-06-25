@@ -4,9 +4,10 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*
 import java.util.*
 /// UserInfo from JWT tokeen. Not stored in dynamoDB.
 data class UserInfo(val subject :String,  val name :String, val email :String) {
-companion object Development{
-    fun user() = UserInfo("palfred", "Peter Alfred Østergaard", "palfred@cloudpartners.com")
-}
+    companion object Defaults{
+        fun development() = UserInfo("palfred", "Peter Alfred Østergaard", "palfred@cloudpartners.com")
+        fun notLoggedIn() = UserInfo("", "", "")
+    }
 }
 
 
