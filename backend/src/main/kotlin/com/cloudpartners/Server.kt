@@ -110,9 +110,9 @@ fun main(args: Array<String>) {
                 val session: Session? = session(req, mapper)
                 if (session != null) {
                     val token = session.token
-                    val claims = getJWTClaims(token).body
-                    info = UserInfo(claims.subject, claims.get("name")?.toString()
-                            ?: "", claims.get("email")?.toString() ?: "")
+                    val claims = getJWTClaims(token)?.body
+                    info = UserInfo(claims?.subject ?: "", claims?.get("name")?.toString()
+                            ?: "", claims?.get("email")?.toString() ?: "")
                 } else {
                     info = UserInfo.notLoggedIn()
                 }

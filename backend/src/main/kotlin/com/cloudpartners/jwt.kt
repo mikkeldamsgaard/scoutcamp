@@ -18,51 +18,14 @@ import java.util.*
 val httpclient = HttpClients.createDefault()
 val jackson = ObjectMapper()
 
-fun getJWTClaims(token: String) : Jws<Claims> {
-    return Jwts.parser().parseClaimsJws(token)
+fun getJWTClaims(token: String) : Jws<Claims>? {
+    val claims = parseToClaims(token)
+    return claims
 }
 
 fun isJWTValid(token: String): Boolean {
     try {
-        val key_url = "https://cognito-idp.eu-west-1.amazonaws.com/${Configuration.cognitoPoolId()}/.well-known/jwks.json"
-
-        val httpGet = HttpGet(key_url)
-        val resp = httpclient.execute(httpGet)
-        val baos = ByteArrayOutputStream()
-
-        resp.entity.writeTo(baos)
-
-        val keys_js = baos.toString(Charsets.UTF_8.name())
-        resp.close()
-
-        println(keys_js)
-
-        val keys_m: Map<String, List<Map<String, String>>> = jackson.readValue(keys_js)
-        println(keys_m["keys"]?.get(0))
-
-        val token_m: Map<String, String> = jackson.readValue(token)
-        val id_token = token_m["id_token"] ?: return false
-
-        val x = Jwts.parser().setSigningKeyResolver(
-                object : SigningKeyResolverAdapter() {
-                    override fun resolveSigningKey(header: JwsHeader<out JwsHeader<*>>?, claims: Claims?): Key {
-                        val key_l = keys_m["keys"] ?: throw RuntimeException("Malformed json from AWS keys")
-                        val key_id = header?.getKeyId() ?: throw RuntimeException("kid not found in token")
-                        val jwk = getKeyById(key_l, key_id)
-                        val modulus = BigInteger(1, Base64.getUrlDecoder().decode(jwk.get("n")))
-                        val exponent = BigInteger(1, Base64.getUrlDecoder().decode(jwk.get("e")))
-
-                        return KeyFactory.getInstance("RSA").generatePublic(RSAPublicKeySpec(modulus, exponent))
-
-                    }
-
-                    private fun getKeyById(keys_l: List<Map<String, String>>, keyId: String): Map<String, String> {
-                        for (entry in keys_l) {
-                            if (entry.get("kid").equals(keyId)) return entry
-                        }
-                        throw RuntimeException("No key found from AWS for kid: " + keyId)
-                    }
-                }).parseClaimsJws(id_token)
+        if (parseToClaims(token) == null) return false
 
         println("Token is valid")
         return true
@@ -71,6 +34,49 @@ fun isJWTValid(token: String): Boolean {
         e.printStackTrace()
     }
     return false
+}
+
+private fun parseToClaims(token: String): Jws<Claims>? {
+    val key_url = "https://cognito-idp.eu-west-1.amazonaws.com/${Configuration.cognitoPoolId()}/.well-known/jwks.json"
+
+    val httpGet = HttpGet(key_url)
+    val resp = httpclient.execute(httpGet)
+    val baos = ByteArrayOutputStream()
+
+    resp.entity.writeTo(baos)
+
+    val keys_js = baos.toString(Charsets.UTF_8.name())
+    resp.close()
+
+    println(keys_js)
+
+    val keys_m: Map<String, List<Map<String, String>>> = jackson.readValue(keys_js)
+    println(keys_m["keys"]?.get(0))
+
+    val token_m: Map<String, String> = jackson.readValue(token)
+    val id_token = token_m["id_token"] ?: return null
+
+    val x = Jwts.parser().setSigningKeyResolver(
+            object : SigningKeyResolverAdapter() {
+                override fun resolveSigningKey(header: JwsHeader<out JwsHeader<*>>?, claims: Claims?): Key {
+                    val key_l = keys_m["keys"] ?: throw RuntimeException("Malformed json from AWS keys")
+                    val key_id = header?.getKeyId() ?: throw RuntimeException("kid not found in token")
+                    val jwk = getKeyById(key_l, key_id)
+                    val modulus = BigInteger(1, Base64.getUrlDecoder().decode(jwk.get("n")))
+                    val exponent = BigInteger(1, Base64.getUrlDecoder().decode(jwk.get("e")))
+
+                    return KeyFactory.getInstance("RSA").generatePublic(RSAPublicKeySpec(modulus, exponent))
+
+                }
+
+                private fun getKeyById(keys_l: List<Map<String, String>>, keyId: String): Map<String, String> {
+                    for (entry in keys_l) {
+                        if (entry.get("kid").equals(keyId)) return entry
+                    }
+                    throw RuntimeException("No key found from AWS for kid: " + keyId)
+                }
+            }).parseClaimsJws(id_token)
+    return x
 }
 
 fun codeToToken(code: String): String {
