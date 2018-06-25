@@ -26,7 +26,7 @@ dependencies {
     compile("com.sparkjava", "spark-core", "2.7.1")
     //testCompile("com.github.mlk","assortmentofjunitrules","1.5.36")
     compile("com.amazonaws", "DynamoDBLocal", "1.11.+")
-//    compile("com.amazonaws", "aws-java-sdk-cognitoidentit", "1.11.+")
+    compile("com.amazonaws", "aws-java-sdk-cognitoidp", "1.11.+")
     compile("io.jsonwebtoken", "jjwt", "0.9.0")
     compile("com.fasterxml.jackson.module","jackson-module-kotlin","2.9.4")
     compile("org.slf4j", "slf4j-simple","1.6.1")

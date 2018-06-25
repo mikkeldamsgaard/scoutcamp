@@ -14,5 +14,6 @@ object Configuration {
     fun cognitoRedirectUrl(): String = properties.get("cognito_redirect_url") as String
     fun cognitoDomain(): String = properties.get("cognito_domain") as String
     fun cognitoPoolId(): String = properties.get("cognito_pool_id") as String
+    fun cognitoRegion(): String = properties.get("cognito_region") as String
 
 }
