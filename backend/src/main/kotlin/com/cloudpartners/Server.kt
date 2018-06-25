@@ -106,7 +106,9 @@ fun main(args: Array<String>) {
             var info : UserInfo = UserInfo.Development.user()
             if (isDev()) {
             } else {
-                val claims = getJWTClaims("string").body
+                val session = mapper.load(Session::class.java, a)
+                val token = session.token
+                val claims = getJWTClaims(token).body
                 info =  UserInfo(claims.subject, claims.get("name")?.toString() ?: "", claims.get("email")?.toString()  ?: "")
             }
             jacksonObjectMapper.writeValueAsString(info)
